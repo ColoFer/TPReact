@@ -10,7 +10,7 @@ const AboutUs = () => {
 We are a team of passionate individuals who love to create amazing things. Our mission is to provide high-quality services and products that exceed our customers' expectations.</p>
     <div className="Card">
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="public/images/about1.jpg" />
+      <Card.Img variant="top" src="/about1.jpg" />
       <Card.Body>
         <Card.Title>Feature 1</Card.Title>
         <Card.Text>
@@ -21,7 +21,7 @@ We are a team of passionate individuals who love to create amazing things. Our m
     </Card>
 
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="src/assets/images/about2.jpg" />
+      <Card.Img variant="top" src="/about2.jpg" />
       <Card.Body>
         <Card.Title>Feature 2</Card.Title>
         <Card.Text>
@@ -32,7 +32,7 @@ We are a team of passionate individuals who love to create amazing things. Our m
     </Card>
 
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="src/assets/images/about3.jpg" />
+      <Card.Img variant="top" src="/about3.jpg" />
       <Card.Body>
         <Card.Title>Feature 3</Card.Title>
         <Card.Text>
