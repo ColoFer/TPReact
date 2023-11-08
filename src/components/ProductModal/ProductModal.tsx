@@ -17,9 +17,10 @@ type ProductModalProps = {
     title: string;
     modalType: ModalType;
     prod: Product;
+    refreshData: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ProductModal = ({show, onHide, title, modalType, prod}: ProductModalProps) => {
+const ProductModal = ({show, onHide, title, modalType, prod, refreshData}: ProductModalProps) => {
 
     //CREATE - UPDATE
     const handleSaveUpdate = async (pro:Product) => {
@@ -35,6 +36,7 @@ const ProductModal = ({show, onHide, title, modalType, prod}: ProductModalProps)
                 position: "top-center",
             });
             onHide();
+            refreshData(prevState => !prevState);
         } catch (error) {
             console.error(error);
             toast.error("Ha ocurrido un error D:");
@@ -50,6 +52,7 @@ const ProductModal = ({show, onHide, title, modalType, prod}: ProductModalProps)
                 position: "top-center",
             });
             onHide();
+            refreshData(prevState => !prevState);
         } catch (error) {
             console.error(error);
             toast.error("Ha ocurrido un error D:");
@@ -85,7 +88,7 @@ const ProductModal = ({show, onHide, title, modalType, prod}: ProductModalProps)
     <>
         {modalType === ModalType.DELETE ? (
             <>
-                <Modal>
+                <Modal show={show} onHide={onHide} centered backdrop="static">
                     <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>
                     </Modal.Header>
@@ -97,7 +100,7 @@ const ProductModal = ({show, onHide, title, modalType, prod}: ProductModalProps)
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={onHide}>Cancelar</Button>
-                        <Button variant="danger" onClick={handleDelete}>Eliminar</Button>
+                        <Button variant="danger" onClick={handleDelete}>Borrar</Button>
                     </Modal.Footer>
 
                 </Modal>
@@ -216,4 +219,4 @@ const ProductModal = ({show, onHide, title, modalType, prod}: ProductModalProps)
   )
 }
 
-export default ProductModal
+export default ProductModal;

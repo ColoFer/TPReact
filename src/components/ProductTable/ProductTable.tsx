@@ -17,7 +17,10 @@ const ProductTable = () => {
     //Variable que muestra el componente Loader hasta que se reciban los datos de la API
     const [isLoading, setIsLoading] = useState(true);
 
-    //Este hook se va a ejecutar cada vez que se renderice el componente
+    //Variable que va a actualizar los datos de la tabla luego de cada operacion existosa
+    const [refreshData, setRefreshData] = useState(false);
+
+    //Este hook se va a ejecutar cada vez que se renderice el componente o RefreshData cambie de estado
     useEffect(()=>{
 
         //LLamamos a la funcion para obtener todos los productos declarados en el ProductService
@@ -28,7 +31,7 @@ const ProductTable = () => {
         };
         fetchProducts();
 
-    },[]);
+    },[refreshData]);
 
     //Test, este log esta modificado para que muestre los datos de una manera mas legible
     console.log(JSON.stringify(products, null,2));
@@ -105,6 +108,7 @@ const handleClick = (newTitle: string, prod: Product, modal: ModalType) => {
             title={title}
             modalType={modalType}
             prod={product}
+            refreshData = {setRefreshData}
             />
         )}
     </>
