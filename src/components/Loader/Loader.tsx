@@ -1,5 +1,5 @@
-import { Spinner } from "react-bootstrap"
-
+import { Spinner } from "react-bootstrap";
+import "./Loader.css";
 
 const Loader = () => {
   return (

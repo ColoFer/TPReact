@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { Product } from "../../types/Product";
 import { ProductService } from "../../services/ProductService";
 import Loader from "../Loader/Loader";
-import { Table } from "react-bootstrap";
-
-//const para inicializar un producto
-
-
-
+import { Button, Table } from "react-bootstrap";
+import { ModalType } from "../../types/ModalType";
+import ProductModal from "../ProductModal/ProductModal";
+import EditButton from "../EditButton/EditButton";
+import DeleteButton from "../DeleteButton/DeleteButton";
 
 
 const ProductTable = () => {
@@ -34,8 +33,38 @@ const ProductTable = () => {
     //Test, este log esta modificado para que muestre los datos de una manera mas legible
     console.log(JSON.stringify(products, null,2));
 
+    //const para inicializar un producto por defecto y evitar el "undefined"
+//crear un producto nuevo
+
+const initializableNewProduct = (): Product => {
+    return {
+      id: 0,
+      title: "",
+      price: 0,
+      description: "",
+      category: "",
+      image: "",
+    };
+  };
+  
+  //Producto seleccionado que se va pasar como prop al Modal
+  const [product, setProduct] = useState<Product>(initializableNewProduct);
+  //const para manejar el estado del Modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
+  const [title, setTitle] = useState("");
+
+//Logica del Modal
+const handleClick = (newTitle: string, prod: Product, modal: ModalType) => {
+    setTitle(newTitle);
+    setModalType(modal);
+    setProduct(prod);
+    setShowModal(true);
+}
+
   return (
     <>
+        <Button onClick={()=> handleClick("Nuevo producto",initializableNewProduct(),ModalType.CREATE)}>Nuevo Producto</Button>
         {
             isLoading ? <Loader/> : (
                 <Table hover>
@@ -46,6 +75,8 @@ const ProductTable = () => {
                             <th>Descripcion</th>
                             <th>Categoria</th>
                             <th>Imagen</th>
+                            <th>Editar</th>
+                            <th>Borrar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,14 +91,24 @@ const ProductTable = () => {
                                     alt={product.title} 
                                     style={{width:"50px"}}/>
                                 </td>
+                                <td><EditButton onClick={() => handleClick("Editar producto", product, ModalType.UPDATE)} /></td>
+                                <td><DeleteButton onClick={() => handleClick("Borrar producto", product, ModalType.DELETE)} /></td>
                             </tr>
                         ))}
                     </tbody>
                 </Table>
-            )
-        }
+            )}
+        {showModal && (
+            <ProductModal
+            show={showModal}
+            onHide={()=> setShowModal(false)}
+            title={title}
+            modalType={modalType}
+            prod={product}
+            />
+        )}
     </>
-  )
-}
+  );
+};
 
-export default ProductTable
+export default ProductTable;
